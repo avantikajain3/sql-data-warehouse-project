@@ -14,11 +14,26 @@ All data in the database will be permanently deleted. proceed with caution and e
 
 
 use master ;
+go
+
+ -- Drop and recreate data warehouse database
+
+ if exists (select 1 from sys.databases where name ='DataWarehouse')
+ begin 
+ alter database DataWarehouse set single_user with rollback immidiate;
+drop database DataWarehouse;
+End;
+go
+
+ -- create database 'DataWarehouse'
 create database DataWarehouse;
-
+go
+ 
 use DataWarehouse;
+go
 
-create schema bronze;
+ -- create schemas
+ create schema bronze;
 go
 create schema silver;
 go
